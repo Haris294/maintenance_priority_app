@@ -81,5 +81,5 @@ python3 app/app.py
 ```
 
 ### 2. Access the App
-#Frontend: Open your browser and go to http://127.0.0.1:5000.
-#REST API: Use a tool like Postman or curl to interact with the API.
+##1.Frontend: Open your browser and go to http://127.0.0.1:5000.
+##2.REST API: Use a tool like Postman or curl to interact with the API.
