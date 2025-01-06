@@ -48,6 +48,8 @@ A simple interface where users can input maintenance issues and view their prior
 ```bash
 git clone https://github.com/your-username/maintenance_priority_app.git
 cd maintenance_priority_app
+```
+
 
 ### 2. Clone the Repository
 ```bash
@@ -55,10 +57,12 @@ python3 -m venv venv
 source venv/bin/activate
 # On Windows:
 # venv\Scripts\activate
+```
 
 ### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
+```
 
 ### 4. Train the Model (Optional)
 
@@ -66,6 +70,7 @@ pip install -r requirements.txt
 ```bash
 python3 scripts/train_model.py
 # This will generate the trained model and encoders in the app/models/ directory.
+```
 
 
 ## Installation and Setup
@@ -73,7 +78,7 @@ python3 scripts/train_model.py
 ### 1. Start the Flask Application
 ```bash
 python3 app/app.py
-
+```
 
 ### 2. Access the App
 #Frontend: Open your browser and go to http://127.0.0.1:5000.
