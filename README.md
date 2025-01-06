@@ -73,7 +73,7 @@ python3 scripts/train_model.py
 ```
 
 
-## Installation and Setup
+## Running the Application
 
 ### 1. Start the Flask Application
 ```bash
