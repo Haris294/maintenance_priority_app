@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Maintenance Priority Classifier</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Maintenance Priority Classifier</h1>
+        <form action="/classify" method="post">
+            <label for="request">Enter your maintenance request:</label>
+            <textarea id="request" name="request" rows="4" placeholder="Describe your request..."></textarea>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <button type="submit">Classify</button>
+        </form>
+    </div>
+</body>
+</html>
