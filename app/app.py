@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Flask, request, jsonify, render_template
 import joblib
 import logging
 
@@ -13,27 +13,49 @@ except FileNotFoundError as e:
     logging.error(f"Model files not found: {e}")
     exit(1)
 
+# Frontend: Input form
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/classify', methods=['POST'])
+# Frontend: Handle form submission
+@app.route('/result', methods=['POST'])
+def result():
+    data = request.form.get('request')  # Get the input from the form
+    if not data:
+        return render_template('index.html', error="Please provide a maintenance request.")
+
+    try:
+        # Process the input and predict
+        input_vector = vectorizer.transform([data])
+        prediction = model.predict(input_vector)
+        category = label_encoder.inverse_transform(prediction)[0]
+
+        # Render the result
+        return render_template('result.html', request=data, priority=category)
+    except Exception as e:
+        logging.error(f"Error during prediction: {str(e)}")
+        return render_template('index.html', error="Internal Server Error")
+
+
+# API: JSON-based classification
+@app.route('/api/classify', methods=['POST'])
 def classify():
-    user_request = request.form.get('request', '').strip()
+    data = request.json
+    user_request = data.get('request', '')
 
     if not user_request:
-        return render_template('index.html', error="Please provide a maintenance request!")
+        return jsonify({'error': 'No maintenance request provided'}), 400
 
     try:
         # Predict priority
         input_vector = vectorizer.transform([user_request])
         prediction = model.predict(input_vector)
         category = label_encoder.inverse_transform(prediction)[0]
-
-        return render_template('result.html', priority=category, request=user_request)
+        return jsonify({'priority': category})
     except Exception as e:
         logging.error(f"Error occurred during prediction: {str(e)}")
-        return render_template('index.html', error="Internal Server Error. Please try again later.")
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
